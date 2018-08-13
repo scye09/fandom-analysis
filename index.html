@@ -250,7 +250,12 @@ Jedi
             <span id="input"></span>
         </div>
     </div>
-    <div id="fanwork"></div>
+    <div id="fanwork">
+        <div id="select-word">
+        </div>
+        <div id="fan-contexts">
+        </div>
+    </div>
 
     <script>
 
@@ -765,6 +770,28 @@ Jedi
 
 
 
+        var fanworkPanel = document.getElementById('fanwork');
+        var fanworkSelectDiv = document.getElementById('select-word');
+        var fanworkContexts = document.getElementById('fan-contexts');
+        var fanworkSelect = document.createElement("select");
+        fanworkSelect.id = 'fanwork-select';
+        fanworkSelectDiv.appendChild(fanworkSelect);
+
+        var nwords = 9326;
+        for (var k = 0; k < nwords; k++) {
+            fanworkSelect.options[fanworkSelect.options.length] = new Option(k, k);
+        }
+        fanworkSelect.options[1].selected = true;
+
+        var loadContexts = function(val) {
+            d3.csv('results_by_word/' + val, function(data) {
+                console.log(data);
+            })
+        };
+
+        fanworkSelect.addEventListener("change", function() {
+            loadContexts(this.value);
+        });
         </script>
     </div> <!-- end content div -->
 </body> <!-- end body div -->
